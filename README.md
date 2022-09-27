@@ -7,8 +7,8 @@ You will be expected to grasp architectural patterns as well as execute coding p
 22/09/22 - Github Administration - Complete  
 22/09/22 - Project Setup - Complete  
 27/09/22 - Design Pattern Implementation - Complete  
-27/09/22 - Security - Complete 
-27/09/22 - Security - Complete 
-27/09/22 - Security - Complete 
-27/09/22 - Web API Cloud Hosting - Inprogress 
-27/09/22 - Project Documentation  - Inprogress 
+27/09/22 - Security - Complete  
+27/09/22 - Security - Complete  
+27/09/22 - Security - Complete  
+27/09/22 - Web API Cloud Hosting - Inprogress  
+27/09/22 - Project Documentation  - Inprogress  
