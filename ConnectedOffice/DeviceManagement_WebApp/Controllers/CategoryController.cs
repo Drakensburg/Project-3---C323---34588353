@@ -2,24 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DeviceManagement_WebApp.Data;
-using DeviceManagement_WebApp.Interface;
-using DeviceManagement_WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using DeviceManagement_WebApp.Data;
+using DeviceManagement_WebApp.Models;
+using DeviceManagement_WebApp.Repository;
+using DeviceManagement_WebApp.Interface;
 
 
 namespace DeviceManagement_WebApp.Controllers
 {
-    public class CategoriesController : Controller
+    public class CategoryController : Controller
     {
         private readonly ConnectedOfficeContext _context;
         private readonly ICategoryRepository _categoryRepository;
 
-        public CategoriesController(ConnectedOfficeContext context)
+        public CategoryController(ConnectedOfficeContext context, ICategoryRepository categoryRepository)
         {
             _context = context;
+            _categoryRepository = categoryRepository;
         }
 
         // GET: Categories
@@ -31,19 +33,7 @@ namespace DeviceManagement_WebApp.Controllers
         // GET: Categories/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var category = await _context.Category
-                .FirstOrDefaultAsync(m => m.CategoryId == id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            return View(category);
+            return View(_categoryRepository.Details(id));
         }
 
         // GET: Categories/Create
@@ -60,8 +50,7 @@ namespace DeviceManagement_WebApp.Controllers
         public async Task<IActionResult> Create([Bind("CategoryId,CategoryName,CategoryDescription,DateCreated")] Category category)
         {
             category.CategoryId = Guid.NewGuid();
-            _context.Add(category);
-            await _context.SaveChangesAsync();
+            _categoryRepository.Create(category);
             return RedirectToAction(nameof(Index));
         }
 
@@ -73,7 +62,7 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Category.FindAsync(id);
+            var category = _categoryRepository.GetById(id);
             if (category == null)
             {
                 return NotFound();
@@ -94,8 +83,7 @@ namespace DeviceManagement_WebApp.Controllers
             }
             try
             {
-                _context.Update(category);
-                await _context.SaveChangesAsync();
+                _categoryRepository.Edit(category);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -119,11 +107,14 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var category = await _context.Category
-                .FirstOrDefaultAsync(m => m.CategoryId == id);
+            var category = _categoryRepository.GetById(id);
             if (category == null)
             {
                 return NotFound();
+            }
+            else 
+            {
+                _categoryRepository.Delete(category);
             }
 
             return View(category);
@@ -134,9 +125,8 @@ namespace DeviceManagement_WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var category = await _context.Category.FindAsync(id);
-            _context.Category.Remove(category);
-            await _context.SaveChangesAsync();
+            var category = _categoryRepository.GetById(id);
+            _categoryRepository.Delete(category);
             return RedirectToAction(nameof(Index));
         }
 

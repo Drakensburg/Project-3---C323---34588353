@@ -26,6 +26,5 @@ namespace DeviceManagement_WebApp.Models
 
         [DisplayName("Device")]
         public virtual ICollection<Device> Device { get; set; }
-        public object CreatedDate { get; internal set; }
     }
 }

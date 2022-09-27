@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DeviceManagement_WebApp.Interface
 {
-    interface IZoneRepository : IGenericRepository<Zone>
+    public interface IZoneRepository : IGenericRepository<Zone>
     {
 
     }
