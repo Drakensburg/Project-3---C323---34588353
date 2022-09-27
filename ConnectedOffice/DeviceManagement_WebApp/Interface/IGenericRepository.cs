@@ -8,6 +8,7 @@ namespace DeviceManagement_WebApp.Interface
 {
     public interface IGenericRepository<T> where T : class
     {
+        //BluePrint for Repo
         T GetById(Guid? id);
         IEnumerable<T> GetAll();
         IEnumerable<T> Find(Expression<Func<T, bool>> expression);

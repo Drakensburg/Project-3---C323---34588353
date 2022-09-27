@@ -9,6 +9,7 @@ namespace DeviceManagement_WebApp.Interface
 {
     public interface IDeviceRepository : IGenericRepository<Device>
     {
+        //BluePrint for Repo
         Task<IActionResult> Index();
         IQueryable<Device> Details(Guid? id);
         void Create(Device device);

@@ -19,15 +19,7 @@ namespace DeviceManagement_WebApp.Repository
             _context = context;
         }
 
-        public void Add(Category entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddRange(IEnumerable<Category> entities)
-        {
-            throw new NotImplementedException();
-        }
+        //Data Access Operations
 
         public void Create(Category category)
         {
@@ -47,11 +39,6 @@ namespace DeviceManagement_WebApp.Repository
             _context.SaveChanges();
         }
 
-        public IEnumerable<Category> Find(Expression<Func<Category, bool>> expression)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<Category> GetAll()
         {
             return _context.Category;
@@ -59,12 +46,7 @@ namespace DeviceManagement_WebApp.Repository
 
         public Category GetById(Guid? id)
         {
-            return (Category)_context.Category.Where(device => device.CategoryId == id);
-        }
-
-        public Task<IActionResult> Index()
-        {
-            throw new NotImplementedException();
+            return (Category)_context.Category.Where(category => category.CategoryId == id);
         }
 
         public void Remove(Category entity)
@@ -73,14 +55,36 @@ namespace DeviceManagement_WebApp.Repository
             _context.SaveChanges();
         }
 
+        IQueryable<Category> ICategoryRepository.Details(Guid? id)
+        {
+            return _context.Category.Where(category => category.CategoryId == id).Include(category => category.Device);
+        }
+
+        //Blueprint code from Generics
+
+        public IEnumerable<Category> Find(Expression<Func<Category, bool>> expression)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IActionResult> Index()
+        {
+            throw new NotImplementedException();
+        }
+
         public void RemoveRange(IEnumerable<Category> entities)
         {
             throw new NotImplementedException();
         }
 
-        IQueryable<Category> ICategoryRepository.Details(Guid? id)
+        public void Add(Category entity)
         {
-            return _context.Category.Where(category => category.CategoryId == id).Include(category => category.Device);
+            throw new NotImplementedException();
+        }
+
+        public void AddRange(IEnumerable<Category> entities)
+        {
+            throw new NotImplementedException();
         }
     }
 }

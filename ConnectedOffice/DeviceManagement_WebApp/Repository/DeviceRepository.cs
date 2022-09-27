@@ -19,15 +19,7 @@ namespace DeviceManagement_WebApp.Repository
             _context = context;
         }
 
-        public void Add(Device entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void AddRange(IEnumerable<Device> entities)
-        {
-            throw new NotImplementedException();
-        }
+        //Data Access Operations
 
         public void Create(Device device)
         {
@@ -52,11 +44,6 @@ namespace DeviceManagement_WebApp.Repository
             _context.SaveChanges();
         }
 
-        public IEnumerable<Device> Find(Expression<Func<Device, bool>> expression)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<Device> GetAll()
         {
             return _context.Device;
@@ -67,18 +54,35 @@ namespace DeviceManagement_WebApp.Repository
             return (Device)_context.Device.Where(device => device.DeviceId == id);
         }
 
-        public Task<IActionResult> Index()
-        {
-            throw new NotImplementedException();
-        }
-
         public void Remove(Device entity)
         {
             _context.Device.Remove(entity);
             _context.SaveChanges();
         }
 
+        //Blueprint code from Generics
+
+        public IEnumerable<Device> Find(Expression<Func<Device, bool>> expression)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IActionResult> Index()
+        {
+            throw new NotImplementedException();
+        }
+
         public void RemoveRange(IEnumerable<Device> entities)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Add(Device entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void AddRange(IEnumerable<Device> entities)
         {
             throw new NotImplementedException();
         }

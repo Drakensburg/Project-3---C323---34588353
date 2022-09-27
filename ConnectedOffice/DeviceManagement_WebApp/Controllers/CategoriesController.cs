@@ -13,12 +13,12 @@ using DeviceManagement_WebApp.Interface;
 
 namespace DeviceManagement_WebApp.Controllers
 {
-    public class CategoryController : Controller
+    public class CategoriesController : Controller
     {
         private readonly ConnectedOfficeContext _context;
         private readonly ICategoryRepository _categoryRepository;
 
-        public CategoryController(ConnectedOfficeContext context, ICategoryRepository categoryRepository)
+        public CategoriesController(ConnectedOfficeContext context, ICategoryRepository categoryRepository)
         {
             _context = context;
             _categoryRepository = categoryRepository;
@@ -33,6 +33,11 @@ namespace DeviceManagement_WebApp.Controllers
         // GET: Categories/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             return View(_categoryRepository.Details(id));
         }
 

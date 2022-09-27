@@ -32,6 +32,11 @@ namespace DeviceManagement_WebApp.Controllers
         // GET: Devices/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             return View(_deviceRepository.Details(id));
         }
 
