@@ -67,7 +67,7 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var category = _categoryRepository.GetById(id);
+            var category = await _context.Category.FindAsync(id);
             if (category == null)
             {
                 return NotFound();
@@ -112,14 +112,11 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var category = _categoryRepository.GetById(id);
+            var category = await _context.Category
+                .FirstOrDefaultAsync(m => m.CategoryId == id);
             if (category == null)
             {
                 return NotFound();
-            }
-            else 
-            {
-                _categoryRepository.Delete(category);
             }
 
             return View(category);
@@ -130,7 +127,8 @@ namespace DeviceManagement_WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var category = _categoryRepository.GetById(id);
+            var category = await _context.Category
+                .FirstOrDefaultAsync(m => m.CategoryId == id);
             _categoryRepository.Delete(category);
             return RedirectToAction(nameof(Index));
         }

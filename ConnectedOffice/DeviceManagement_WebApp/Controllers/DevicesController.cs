@@ -68,7 +68,7 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var device = _deviceRepository.GetById(id);
+            var device = await _context.Device.FindAsync(id);
             if (device == null)
             {
                 return NotFound();
@@ -116,14 +116,10 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var device = _deviceRepository.GetById(id);
+            var device = await _context.Device.FindAsync(id);
             if (device == null)
             {
                 return NotFound();
-            }
-            else
-            {
-                _deviceRepository.Delete(device);
             }
 
             return View(device);
@@ -134,7 +130,8 @@ namespace DeviceManagement_WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var device = _deviceRepository.GetById(id);
+            var device = await _context.Device
+                .FirstOrDefaultAsync(m => m.DeviceId == id);
             _deviceRepository.Delete(device);
             return RedirectToAction(nameof(Index));
         }

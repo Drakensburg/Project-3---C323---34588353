@@ -67,7 +67,7 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var zone = _zoneRepository.GetById(id);
+            var zone = await _context.Zone.FindAsync(id);
             if (zone == null)
             {
                 return NotFound();
@@ -114,14 +114,11 @@ namespace DeviceManagement_WebApp.Controllers
                 return NotFound();
             }
 
-            var zone = _zoneRepository.GetById(id);
+            var zone = await _context.Zone
+                                    .FirstOrDefaultAsync(m => m.ZoneId == id);
             if (zone == null)
             {
                 return NotFound();
-            }
-            else
-            {
-                _zoneRepository.Delete(zone);
             }
 
             return View(zone);
@@ -132,7 +129,8 @@ namespace DeviceManagement_WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id)
         {
-            var zone = _zoneRepository.GetById(id);
+            var zone = await _context.Zone
+                       .FirstOrDefaultAsync(m => m.ZoneId == id);
             _zoneRepository.Delete(zone);
             return RedirectToAction(nameof(Index));
         }
